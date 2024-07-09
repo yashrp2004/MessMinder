@@ -16,6 +16,14 @@ def LOGIN1(request):
     return render(request, 'login_student.html')
 def LOGIN2(request):
     return render(request, 'login_staff.html')
+
+
+def ABOUT(request):
+    return render(request, 'about.html')
+
+def CONTACT(request):
+    return render(request, 'contact.html')
+
   
 
 def MAIN(request):

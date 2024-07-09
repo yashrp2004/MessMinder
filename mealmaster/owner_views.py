@@ -1,9 +1,10 @@
+import csv
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from app.models import course,Session_Year,Customeruser,Student,Staff, Staff_Notification,Staff_leave,Staff_Feedback,Student_Notification,Student_Feedback,Mess_off_leave,Mess,Billing
 from django.contrib import messages
+import io
 #DECORATOR FOR AVOIDING DIRECT ACCESS TO OWNER PANEL USING URL
-
 
 @login_required(login_url='/')
 def Home(request):
@@ -41,7 +42,7 @@ def ADD_STUDENT(request):
         address = request.POST.get('address')
         course_id = request.POST.get('course_id')
         session_year_id = request.POST.get('session_year_id')
-        # print(Profile_pic,first_name,last_name,email,username,password,gender,course_id,Roll_num,session_year_id,Room_Number,Mobile_Number,address)
+        print(Profile_pic,first_name,last_name,email,username,password,gender,course_id,Roll_num,session_year_id,Room_Number,Mobile_Number,address)
 
         if Customeruser.objects.filter(email=email).exists():
             messages.warning(request,'Email already registered')
@@ -57,6 +58,7 @@ def ADD_STUDENT(request):
                 email = email,
                 profile_pic = Profile_pic,
                 user_type = 3
+
 
             )
             user.set_password(password)
@@ -77,7 +79,7 @@ def ADD_STUDENT(request):
 
             )
             student.save()
-            messages.success(request, user.first_name + " "+ user.last_name + " "+' saved successfully')
+            messages.success(request, user.first_name + " "+ user.last_name + ' saved successfully')
             return redirect('add_student')
 
     context = {
@@ -85,6 +87,69 @@ def ADD_STUDENT(request):
         'session_year' : session_year,
     }
     return render(request, 'owner/add_student.html',context)
+
+@login_required(login_url='/')
+def ADD_STUDENT_CSV(request):
+    Course = course.objects.all()
+    session_year = Session_Year.objects.all()
+
+
+    if request.method == "POST":
+        csv_file = request.FILES['csv_file']
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+        for row in reader:
+            # Extract data from CSV rows
+            Profile_pic = row['profile_pic']
+            first_name = row['first_name']
+            last_name = row['last_name']
+            email = row['email']
+            username = row['username']
+            password = row['password']
+            address = row['address']
+            gender = row['gender']
+            roll_num = row['Roll_Num']
+            room_number = row['room_number']
+            mobile_number = row['mobile_number']
+            course_id = request.POST.get('course_id')
+            session_year_id = request.POST.get('session_year_id')
+
+            # Check if user exists
+            if Customeruser.objects.filter(email=email).exists() or Customeruser.objects.filter(username=username).exists():
+                messages.warning(request,'usernaame already registered')
+                return redirect('add_student')
+            else:
+                user = Customeruser(
+                first_name = first_name,
+                last_name = last_name,
+                username = username,
+                email = email,
+                profile_pic = Profile_pic,
+                user_type = 3
+            )
+            user.set_password(password)
+            user.save()
+            
+            Course = course.objects.get(id = course_id)
+            session_year = Session_Year.objects.get(id = session_year_id)
+
+            student = Student.objects.create(
+                user = user,
+                address =address,
+                session_year_id = session_year,
+                course_id = Course,
+                gender = gender,
+                roll_number = roll_num,
+                room_number = room_number,
+                phone_number = mobile_number,
+
+            )
+            student.save()
+        messages.success(request,'CSV saved successfully')
+        return redirect('add_student')
+
+    return render(request, 'owner/add_student.html')  # Render the same form after processing CSV
+
 
 
 @login_required(login_url='/')

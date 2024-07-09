@@ -20,11 +20,13 @@ from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required
 
 from .import views,owner_views,staff_views,student_views
+import io
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('base/', views.BASE,name='base'),
+    
     # login path
     path('', views.MAIN,name='home'),
     path('home/login', views.LOGIN,name='login'),
@@ -43,6 +45,7 @@ urlpatterns = [
     #owner panel url or hod
     path('OWNER/Home', owner_views.Home,name='owner_home'),
     path('OWNER/student/add', owner_views.ADD_STUDENT,name='add_student'),
+    path('OWNER/student/addcsv/', owner_views.ADD_STUDENT_CSV, name='add_student_csv'),
     path('OWNER/student/View', owner_views.VIEW_STUDENT,name='view_student'),
     path('OWNER/student/details/<str:id>',owner_views.STUDENT_DETAILS, name='student_details'),
     path('OWNER/student/Edit/<str:id>', owner_views.EDIT_STUDENT,name='edit_student'),
@@ -60,7 +63,7 @@ urlpatterns = [
     path('OWNER/Staff/Edit/<str:id>', owner_views.EDIT_STAFF,name='edit_staff'),
     path('OWNER/Staff/Update', owner_views.UPDATE_STAFF,name='update_staff'),
     path('OWNER/Staff/Delete/<str:admin>', owner_views.DELETE_STAFF,name='delete_staff'),
-
+    
     path('OWNER/Staff/Send_Notification', owner_views.STAFF_SEND_NOTIFICATION,name='staff_send_notification'),
     path('OWNER/Staff/save_notification', owner_views.SAVE_STAFF_NOTIFICATION,name='save_staff_notification'),
 
@@ -104,6 +107,7 @@ urlpatterns = [
 
 
     # student panel urls 
+    
     path('student/Home', student_views.Home,name='student_home'),
     path('student/Notifications',student_views.STUDENT_NOTIFICATION,name='student_notification'),
     path('student/mark_as_done/<status>',student_views.STUDENT_NOTIFICATION_MARK_DONE,name='student_notification_mark_done'),
@@ -126,6 +130,7 @@ urlpatterns = [
 # generate bill urls
     path('staff/generate_bill/', staff_views.generate_bill, name='generate_bill'),
     path('student/view_bills/', student_views.view_bills, name='view_bills'),
+    path('student/view_bills_as_pdf/', student_views.view_bills_as_pdf, name='view_bills_as_pdf'),
     
     # path('student/view_bills/<str:student_id>/', student_views.view_bills, name='view_bills'),
     

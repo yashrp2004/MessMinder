@@ -1,6 +1,97 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<style>
+    /* CSS styles go here */
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .breadcrumb {
+        background-color: #f8f9fa;
+        padding: 8px 15px;
+        border-radius: 5px;
+    }
+
+    .breadcrumb-item {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .breadcrumb-item:last-child {
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .modal-content {
+        border-radius: 5px;
+    }
+
+    .modal-header {
+        padding: 15px;
+        border-bottom: none;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .modal-footer {
+        padding: 15px;
+        border-top: none;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 5px;
+    }
+
+    .table thead th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        text-align: left;
+        padding: 12px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 4px;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+</style>
+
+<!-- Your HTML content goes here -->
+
 <div class="page-header">
     <div class="row align-items-center">
        <div class="col">
@@ -12,10 +103,9 @@
        </div>
        <div class="col-auto text-right float-right ml-auto">
           <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"> <i class="fas fa-comment"></i>&nbsp; Feedback history</button>
-          
        </div>
     </div>
- </div>
+</div>
  
  {% include 'includes/messages.html' %}
 
@@ -57,7 +147,6 @@
 </div>
 
 <!-- Large modal -->
-
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

@@ -2,6 +2,54 @@
 {%if messages %}
 {% for message in messages %}
 {% if message.tags == 'error' %}
+<style>
+  .alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert-dismissible {
+  padding-right: 2.5rem;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+
+.close:hover {
+  color: #000;
+  text-decoration: none;
+  opacity: 0.75;
+}
+
+</style>
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
    <strong>{{ message }}</strong> 
    <button type="button" class="close" data-dismiss="alert" aria-label="Close">

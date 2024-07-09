@@ -2,10 +2,19 @@ import datetime
 from django.shortcuts import render,redirect
 from app.models import Student_Notification,Student,Student_Feedback,Mess_off_leave,Billing
 from django.contrib import messages
-
 from django.utils import timezone
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest,HttpResponse
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Image
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib import pdfencrypt
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfgen import canvas
+from reportlab.platypus import Spacer
 
+from io import BytesIO
 
 def Home(request):
     return render(request,'student/home.html')
@@ -183,8 +192,108 @@ def STUDENT_MESS_LEAVE_SAVE(request):
 #    return render(request, 'student/view_bills.html', context)
 
 
+from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
+from reportlab.platypus import SimpleDocTemplate
+from io import BytesIO
+
+from reportlab.platypus import Spacer
+
+def generate_bills_pdf(student):
+    # Get student details
+    student_name = student.user.first_name + " " + student.user.last_name if hasattr(student.user, 'first_name') and hasattr(student.user, 'last_name') else ""
+    student_address = student.address
+    student_gender = student.gender
+    student_roll_number = student.roll_number
+    student_room_number = student.room_number
+    student_phone_number = student.phone_number
+
+    # Create a buffer for the PDF
+    buffer = BytesIO()
+
+    # Create a PDF document
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Title
+    title = "MessMinder Mess Bill"
+    styles = getSampleStyleSheet()
+    title_style = styles['Title']
+    title_paragraph = Paragraph(title, title_style)
+    
+    # Watermark
+    watermark_text = "MESSMINDER"
+    watermark_style = styles['Normal']
+    watermark_style.alignment = TA_CENTER
+
+    # Add content to the PDF
+    data = [
+        f"Student Name: {student_name}",
+        f"Address: {student_address}",
+        f"Gender: {student_gender}",
+        f"Roll Number: {student_roll_number}",
+        f"Room Number: {student_room_number}",
+        f"Phone Number: {student_phone_number}",
+        "",  # Empty row for spacing
+        ["Month", "Year", "Days of Leave Taken", "Total Days in Month", "Amount Due", "Payment Status"]
+    ]
+    bills = Billing.objects.filter(student=student)
+    for bill in bills:
+        data.append([
+            bill.month,
+            bill.year,
+            bill.days_of_leave_taken,
+            bill.total_days_in_month,
+            bill.amount_due,
+            "Paid" if bill.payment_status else "Unpaid"
+        ])
+
+    table = Table(data[7:], colWidths=100, rowHeights=30)
+    table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                               ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                               ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                               ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                               ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                               ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                               ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+    
+    # Build elements
+    watermark = Paragraph(watermark_text, watermark_style)
+    elements = [watermark, title_paragraph] + [Spacer(1, 20)] + [Paragraph(item, styles['Normal']) for item in data[:6]] + [Spacer(1, 20), table]
+
+    # Function to draw watermark on each page
+    def draw_watermark(canvas, doc, watermark_text, font_size=20, x_offset=100, y_offset=-100):
+        canvas.saveState()
+        canvas.setFont('Helvetica', font_size)  # Adjust font size as needed
+        canvas.setFillAlpha(0.3)  # Set opacity to 0.3
+        canvas.rotate(45)
+        canvas.drawString(x_offset, y_offset, watermark_text)
+        canvas.restoreState()
+
+    # Add watermark to every page
+    doc.build(elements, onFirstPage=lambda canvas, doc: draw_watermark(canvas, doc, watermark_text, font_size=70, x_offset=200, y_offset=800), onLaterPages=lambda canvas, doc: draw_watermark(canvas, doc, watermark_text, font_size=30, x_offset=150, y_offset=800))
+
+    # Return PDF data
+    return buffer.getvalue()
+
+
+
+
 
 def view_bills(request):
     student = Student.objects.get(user=request.user)
     bills = Billing.objects.filter(student=student)
     return render(request, 'student/view_bills.html', {'bills': bills})
+
+def view_bills_as_pdf(request):
+    student = Student.objects.get(user=request.user)
+    pdf_data = generate_bills_pdf(student)
+
+    # Create HTTP response with PDF as attachment
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="bills.pdf"'
+    response.write(pdf_data)
+    return response

@@ -1,6 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+  }
 
+  .card {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      width: 1200px;
+      overflow-y: auto; /* Adding scrollbar for overflow content */
+      max-height: calc(100vh - 180px); 
+  }
+
+  .card-body {
+      padding: 20px;
+  }
+
+  .form-title {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+  }
+
+  .form-group {
+      margin-bottom: 20px;
+  }
+
+  label {
+      font-weight: bold;
+  }
+
+  input[type="file"],
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select,
+  textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+  }
+
+  select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px top 50%;
+      background-size: 16px auto;
+      padding-right: 30px;
+  }
+
+  textarea {
+      height: 100px; /* Reduced height */
+  }
+
+  .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+  }
+
+  .btn-primary:hover {
+      background-color: #0056b3;
+  }
+  </style>
 <div class="row">
     <div class="col-sm-12">
       <div class="card">
@@ -134,11 +213,63 @@
               <div class="col-12">
                 <button type="submit" class="btn btn-primary">ADD profile</button>
               </div>
+              
           </form>
+          <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="post" action="{% url 'add_student_csv' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="col-12">
+                              <h5 class="form-title">
+                                  <span>Add student from CSV</span>
+                              </h5>
+                            </div>
+                            
+                            <div class="col-12 col-sm-11">
+                              <div class="form-group">
+                                  <label>Course</label>
+                                  <select class="form-control" name="course_id"  required > 
+                                     <option>Select Course</option>
+                                     {% for i in Course %}
+                                     <option value ="{{i.id}}"> {{i.name}}</option>
+                                     {% endfor %}
+                      
+                                  </select>
+                               </div>
+                            </div>
+                             
+                          
+                            <div class="col-12 col-sm-11">
+                              <div class="form-group">
+                                  <label>session year</label>
+                                  <select class="form-control" name="session_year_id"  required >
+                                     <option> Select session year</option>
+                                     {% for i in session_year %}
+                                     <option value="{{i.id}}"> {{i.session_start}} to {{i.session_end}}</option>
+                                     {% endfor %}
+                                  </select>
+                               </div>
+                            </div>
+                           
+                            <div class="col-12 col-sm-11">
+                                <div class="form-group">
+                                    <label>Upload CSV file:</label>
+                                    <input type="file" name="csv_file" accept=".csv" class="form-control-file">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Upload CSV</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+        
+        
   <script>
     var password = document.getElementById("pwd");
     var confirm_password = document.getElementById("cpwd");

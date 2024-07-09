@@ -1,147 +1,324 @@
 {% extends 'base.html' %}
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Mess-off</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
 
-<div class="page-header">
-    <div class="row align-items-center">
-       <div class="col">
-          <h3 class="page-title">Apply for Mess-off </h3>
-          <ul class="breadcrumb">
-             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-             <li class="breadcrumb-item active">Student</li>
-          </ul>
-       </div>
-       <div class="col-auto text-right float-right ml-auto">
-          <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button"> <i class="fas fa-pray"></i>&nbsp; leave apply history</button>
-          
-       </div>
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            font-size: 14px;
+        }
+
+        .breadcrumb-item {
+            display: inline;
+            margin-right: 5px;
+        }
+
+        .breadcrumb-item.active {
+            color: #007bff;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            outline: 0;
+        }
+
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            margin: 0.5rem;
+            pointer-events: none;
+        }
+
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: 0.3rem;
+            border-top-right-radius: 0.3rem;
+        }
+
+        .modal-body {
+            position: relative;
+            flex: 1 1 auto;
+            padding: 1rem;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+            background-color: #fff;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .actions {
+            display: inline-block;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 10rem;
+        }
+
+        .badge-info {
+            color: #fff;
+            background-color: #17a2b8;
+        }
+
+        .badge-success {
+            color: #fff;
+            background-color: #28a745;
+        }
+
+        .badge-danger {
+            color: #fff;
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Apply for Mess-off</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Student</li>
+                </ul>
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+                <button class="btn btn-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg"
+                        type="button"> <i class="fas fa-pray"></i>&nbsp; leave apply history</button>
+            </div>
+        </div>
     </div>
- </div>
- 
- {% include 'includes/messages.html' %}
+    {% include 'includes/messages.html' %}
 
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-body">
-                <form method ="post" action='{% url 'student_mess_leave_save' %}'>
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-12">
-                            <h5 class="form-title">
-                                <span>Apply Mess-off leave</span>
-                            </h5>
-                        </div>
-                   
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action='{% url 'student_mess_leave_save' %}'>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <h5 class="form-title">
+                                    <span>Apply Mess-off leave</span>
+                                </h5>
+                            </div>
 
-                        <div class="col-12 col-sm-11">
-                            <div class="form-group">
-                                <label>Mess-off from date</label>
-                                <input type="date" class="form-control" name="off_date" required />
+                            <div class="col-12 col-sm-11">
+                                <div class="form-group">
+                                    <label>Mess-off from date</label>
+                                    <input type="date" class="form-control" name="off_date" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-11">
+                                <div class="form-group">
+                                    <label>Mess-on date</label>
+                                    <input type="date" class="form-control" name="on_date" required/>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-11">
+                                <div class="form-group">
+                                    <label>leave Reason message</label>
+                                    <textarea class="form-control" name="leave_message"
+                                              style="height:200px" required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    apply for leave
+                                </button>
                             </div>
                         </div>
-
-
-                        <div class="col-12 col-sm-11">
-                            <div class="form-group">
-                                <label>Mess-on date</label>
-                                <input type="date" class="form-control" name="on_date" required />
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-11">
-                            <div class="form-group">
-                                <label>leave Reason message</label>
-                                <textarea class="form-control"  name="leave_message" style="height:200px"  required></textarea>
-                            </div>
-                        </div>
-                      
-
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">
-                                apply for leave
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
-</div>
 
 <!-- Large modal -->
-
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> leave apply history</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-          <div class="modal-body">
-
-
-            <div class="content container-fluid">
-               
-                <div class="row">
-                   <div class="col-sm-12">
-                      <div class="card card-table">
-                         <div class="card-body">
-                            <div class="table-responsive">
-                               <table id="table_id" class="table table-hover table-center mb-0 ">
-                                  <thead>
-                                     <tr>
-                                        <th>off Date</th>
-                                        <th>on Date</th>
-                                        <th>days</th>
-                                        <th>Message</th>
-
-                                        
-                                        <th class="text-right">Action</th>
-                                     </tr>
-                                  </thead>
-                                  <tbody>
-                                    {% for i in mess_off_history %}
-                                     <tr>
-
-                                        <td>{{i.off_date }}</td>
-                                        <td>{{i.on_date }}</td>
-                                        <td>{{ i.days }}</td>
-
-                                        <td>{{i.message}}</td>
- 
-                                        <td class="text-right">
-                                           <div class="actions">
-                                             {% if i.status == 0 %}
-                                             <span class="badge badge-info">Request pending</span>
-                                             {% elif i.status == 1 %}
-                                             <span class="badge badge-success">Accepted</span>
-                                             {% else %}
-                                             <span class="badge badge-danger">Rejected</span>
-                                             {% endif %}
-                                           </div>
-                                        </td>
-                                     </tr>
-                                     {% endfor %}
-                                  </tbody>
-                               </table>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> leave apply history</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="table_id" class="table table-hover table-center mb-0 ">
+                                            <thead>
+                                            <tr>
+                                                <th>off Date</th>
+                                                <th>on Date</th>
+                                                <th>days</th>
+                                                <th>Message</th>
+                                                <th class="text-right">Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for i in mess_off_history %}
+                                            <tr>
+                                                <td>{{i.off_date }}</td>
+                                                <td>{{i.on_date }}</td>
+                                                <td>{{ i.days }}</td>
+                                                <td>{{i.message}}</td>
+                                                <td class="text-right">
+                                                    <div class="actions">
+                                                        {% if i.status == 0 %}
+                                                        <span class="badge badge-info">Request pending</span>
+                                                        {% elif i.status == 1 %}
+                                                        <span class="badge badge-success">Accepted</span>
+                                                        {% else %}
+                                                        <span class="badge badge-danger">Rejected</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                         </div>
-                      </div>
-                   </div>
+                        </div>
+                    </div>
                 </div>
-             </div>
-
-          </div>
-
+            </div>
+        </div>
     </div>
-    </div>
-  </div>
 </div>
 
+</body>
+</html>
 {% endblock  %}

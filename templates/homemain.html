@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-  <title>b2d | mealmaster</title>
+  <title>messminder</title>
   <!-- Favicons -->
 
   <!-- Google Fonts -->
@@ -27,6 +27,214 @@
   <!-- Template Main CSS File -->
   <link href="/static/student_main.css" rel="stylesheet">
 
+  <style>
+    /* Navbar styles */
+    .navbar {
+      background-color: #ffffff;
+      padding: 20px 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333333;
+    }
+
+    .navbar-nav {
+      margin-right: 20px;
+    }
+
+    .nav-link {
+      font-size: 18px;
+      font-weight: 500;
+      color: #666666;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #007bff;
+    }
+
+    /* Hero Section styles */
+    .hero {
+      background-color: #f8f9fa;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #333333;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #666666;
+      margin-bottom: 40px;
+    }
+
+    /* About Section styles */
+    .about {
+      background-color: #ffffff;
+      padding: 100px 0;
+    }
+
+    .about h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333333;
+      margin-bottom: 30px;
+    }
+
+    .about p {
+      font-size: 18px;
+      color: #666666;
+      margin-bottom: 30px;
+    }
+
+    .about ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .about ul li {
+      font-size: 18px;
+      color: #666666;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .about ul li i {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    /* Contact Section styles */
+    .contact {
+      background-color: #f8f9fa;
+      padding: 100px 0;
+    }
+
+    .contact h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #333333;
+      margin-bottom: 30px;
+    }
+
+    .contact p {
+      font-size: 18px;
+      color: #666666;
+      margin-bottom: 30px;
+    }
+
+    .contact .info-item {
+      font-size: 18px;
+      color: #666666;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact .info-item i {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    .contact form input,
+    .contact form textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #495057;
+      background-color: #fff;
+    }
+
+    .contact form textarea {
+      resize: none;
+      height: 150px;
+    }
+
+    .contact form button {
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+
+    .contact form button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer styles */
+    .footer {
+      background-color: #333333;
+      color: #ffffff;
+      padding: 50px 0;
+    }
+
+    .footer h4 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .footer p {
+      font-size: 16px;
+      color: #cccccc;
+      margin-bottom: 20px;
+    }
+
+    .footer a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      color: #007bff;
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #007bff;
+      color: #ffffff;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      border-radius: 50%;
+      z-index: 9999;
+      display: none;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .scroll-top:hover {
+      background-color: #0056b3;
+    }
+
+    /* Show scroll to top button on scroll */
+    .scroll-top.active {
+      display: block;
+    }
+  </style>
+  
+
 </head>
 
 <body>
@@ -37,7 +245,7 @@
       <a href="#hero" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1>MealMaster<span>.</span></h1>
+        <h1>MessMinder<span>.</span></h1>
       </a>
       <nav id="navbar" class="navbar">
         <ul>
@@ -47,7 +255,7 @@
             <ul>
               <li><a href="{% url 'login' %}"> <span><img src="/static/assets/mainhome/assets/img/admin.png" alt=""></span> Admin</a></li>
               <li><a href="{% url 'login_staff' %}"><span><img  src="/static/assets/mainhome/assets/img/staff.png" alt=""></span> Staff</a></li>
-              <li><a href="{% url 'login_student' %}" <span><img src="/static/assets/mainhome/assets/img/student.png" alt=""></span> Student</a></li>
+              <li><a href="{% url 'login_student' %}"><span><img src="/static/assets/mainhome/assets/img/student.png" alt=""></span> Student</a></li>
               
             </ul>
           </li>
@@ -66,9 +274,11 @@
     <div class="container position-relative">
       <div class="row gy-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-          <h2>Welcome to <span>MealMaster</span></h2>
-          <p>"Fuel your body, Fuel your mind"<br>
-            "Healthy food, Healthy mind"
+          <h2>Welcome to <span>MessMinder</span></h2>
+          <p>Nourish your body, Nourish your mind,
+            With every meal, a treasure you find.<br>
+            For what you eat shapes how you think,
+            A healthy balance, life's perfect link.
           </p>
           <div class="d-flex justify-content-center justify-content-lg-start">
           </div>
@@ -127,12 +337,12 @@
 
         <div class="section-header">
           <h2>About Us</h2>
-          <p>Welcome to MealMaster,<br>
+          <p>Welcome to MessMinder,<br>
           </p>
         </div>
 
         <div class="row gy-4">
-          <h3 style="margin-left:50px;">System users</h3>
+          <h3 style="margin-left:10px;">System users</h3>
           <div class="col-lg-6">
             <img src="/static/assets/mainhome/assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
             {% comment %} <p>SYSTEM  USERS
@@ -145,26 +355,16 @@
               doloribus debitis explicabo similique sit. Accusantium sed ut omnis beatae neque deleniti repellendus.</p> {% endcomment %}
           </div>
           <div class="col-lg-6">
-            <div class="content ps-0 ps-lg-5">
-              <p class="fst-italic">
-              
-              </p>
+            <div class="col-lg-6">
+              <img src="/static/assets/mainhome/assets/img/about.jpg" class="img-fluid rounded-4 mb-4" alt="">
+              <h3>Three user types:</h3>
               <ul>
-                <li><i class="bi bi-check-circle-fill"></i> <span style="font-size:20px" ><b> Student </b></span> : A Student can request for rebate and overhead through forms available in the pages accessible to him/her. He/She can also see the history of requests by him/her.
-                </li>
-                <li><i class="bi bi-check-circle-fill"></i> <span style="font-size:20px"><b> Mess Worker</b></span> : Mess worker here have access to his separate pages using which he can approve overhead requests as these requests are usually dealt by mess worker himself. We also provide the functionality of changing the prices of the meal. 
-                </li>
-                <li><i class="bi bi-check-circle-fill"></i><span style="font-size:20px"><b> Mess Manager</b></span> : Mess manager approves the rebate requests as done so in the current scenario. Rebate requests needs to be analyzed before approving that’s why it requires mess manager to do that. At the end of every month bills need to generated for which a lot of paperwork is needed. Since the app keeps track of overheads and rebates of every student, it makes the process of generating the monthly bills really easy.
+                  <li>Student: Request rebate and overhead, view request history.</li>
+                  <li>Mess Worker: Approve overhead requests, adjust meal prices.</li>
+                  <li>Mess Manager: Approve rebate requests, generate monthly bills easily.</li>
               </ul>
-              <p>
-                <span style="font-size:30px"><b>It</b> </span>is a plateform where any organisation  like: hostel, private organisations can use to handle the mess/canteen via this plateform.
-               by this plateform  users, staff workers as well as admin of organisation or institutes can access the data(like: Mess Fund, workers details & users details with bills details )
-               </p>
-
-              <div class="position-relative mt-4">
-                <img src="/static/assests/mainhome/assets/img/about-2.jpg" class="img-fluid rounded-4" alt="">
-              
-              </div>
+          </div>
+          
             </div>
           </div>
         </div>
@@ -190,7 +390,7 @@
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h4>Location:</h4>
-                  <p>Kapurthala,Punjab,INDIA</p>
+                  <p>Pune,Maharashtra,India</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -198,7 +398,7 @@
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h4>Email:</h4>
-                  <p>prashant@gmial.com</p>
+                  <p>messminder@gmial.com</p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -230,9 +430,9 @@
                 <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
               </div>
               <div class="my-3">
-                <div class="loading">Loading</div>
+                <div class="loading">Loading...</div>
                 <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+                <div class="sent-message">You will be redirected to Email. Thank you!</div>
               </div>
               <div class="text-center"><button type="submit">Send Message</button></div>
             </form>
@@ -287,10 +487,10 @@
         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Contact Us</h4>
           <p>
-            Kapurthala, Punjab, INDIA
+            Pune, Maharashtra, India
             <br>
             <strong>Phone:</strong> +91 7355469911<br>
-            <strong>Email:</strong> Mealmaster@gmial.com<br>
+            <strong>Email:</strong> messminder@gmial.com<br>
           </p>
 
         </div>
